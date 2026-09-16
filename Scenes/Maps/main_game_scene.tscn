@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://02e3ld5c3m6d"]
+
+[ext_resource type="PackedScene" uid="uid://yvy5a5j25oq8" path="res://Scenes/Maps/test_level.tscn" id="1_wog1h"]
+[ext_resource type="PackedScene" uid="uid://cafxv8ipb18pm" path="res://Scenes/Character/player.tscn" id="2_ixgqj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wog1h"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_5q3du"]
+sky_material = SubResource("ProceduralSkyMaterial_wog1h")
+
+[sub_resource type="Environment" id="Environment_ixgqj"]
+background_mode = 2
+sky = SubResource("Sky_5q3du")
+glow_enabled = true
+
+[node name="MainGameScene" type="Node3D" unique_id=1241206074]
+
+[node name="TestLevel" parent="." unique_id=2077841003 instance=ExtResource("1_wog1h")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=657464049]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1079140559]
+environment = SubResource("Environment_ixgqj")
+
+[node name="Player" parent="WorldEnvironment" unique_id=2032429725 instance=ExtResource("2_ixgqj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8361173, 6)
