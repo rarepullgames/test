@@ -12,6 +12,8 @@
 [node name="Player" type="CharacterBody3D" unique_id=2032429725]
 floor_constant_speed = true
 script = ExtResource("1_bk5kl")
+MinSize = 0.1
+MaxSize = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=314176600]
 shape = SubResource("CapsuleShape3D_ircqx")

@@ -27,7 +27,16 @@ public partial class Camera : Node3D
     public override void _Process(double delta)
     {
         GetParent<Node3D>().RotateY(-mouseMovement.X * MouseSensitivity);
-        RotateX(-mouseMovement.Y * MouseSensitivity);
+
+        Vector3 rotation = Rotation;
+
+        rotation.X = Mathf.Clamp(
+            rotation.X - mouseMovement.Y * MouseSensitivity,
+            Mathf.DegToRad(MinPitchDegrees),
+            Mathf.DegToRad(MaxPitchDegrees)
+        );
+
+        Rotation = rotation;
 
         mouseMovement = Vector2.Zero;
     }
