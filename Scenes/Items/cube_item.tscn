@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://46qfvgu103u6"]
+
+[ext_resource type="PackedScene" uid="uid://ccyoex2fs8t0j" path="res://Scenes/Items/base_item.tscn" id="1_noeob"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ircqx"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bs43s"]
+albedo_color = Color(0.28743416, 0.51096505, 0.77464104, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h8443"]
+material = SubResource("StandardMaterial3D_bs43s")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="CubeItem" unique_id=181761504 instance=ExtResource("1_noeob")]
+ItemName = "Cube"
+
+[node name="CollisionShape3D" parent="." index="0" unique_id=815511258]
+shape = SubResource("BoxShape3D_ircqx")
+
+[node name="MeshInstance3D" parent="." index="1" unique_id=214159006]
+mesh = SubResource("BoxMesh_h8443")

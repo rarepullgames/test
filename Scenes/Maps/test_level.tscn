@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://yvy5a5j25oq8"]
 
 [ext_resource type="Texture2D" uid="uid://ck8u88odtscfv" path="res://Assets/Textures/texture_09.png" id="1_qcpxv"]
+[ext_resource type="PackedScene" uid="uid://46qfvgu103u6" path="res://Scenes/Items/cube_item.tscn" id="3_c1ape"]
+[ext_resource type="PackedScene" uid="uid://dplnup2kv17tt" path="res://Scenes/Interactables/collector.tscn" id="4_5q3du"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_30180"]
 albedo_texture = ExtResource("1_qcpxv")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8443"]
-albedo_color = Color(0.872916, 0.1635921, 0.21316794, 1)
 
 [node name="TestLevel" type="Node3D" unique_id=2077841003]
 
@@ -16,6 +15,45 @@ material_override = SubResource("StandardMaterial3D_30180")
 use_collision = true
 size = Vector3(20, 0.5, 20)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=984226286]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-material = SubResource("StandardMaterial3D_h8443")
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=764544221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29345703, 3.2850347, -8.232422)
+material_override = SubResource("StandardMaterial3D_30180")
+use_collision = true
+size = Vector3(19.413086, 0.5, 5.3115234)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1542545081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.25097656, -0.8881836)
+material_override = SubResource("StandardMaterial3D_30180")
+use_collision = true
+size = Vector3(20, 0.5, 20)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=41231109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.928528, 1.1030073, -0.8881836)
+material_override = SubResource("StandardMaterial3D_30180")
+use_collision = true
+size = Vector3(7.856079, 0.5, 20)
+
+[node name="CubeItem" parent="." unique_id=2025688083 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.33720112, 0.24902296, -8.083565)
+
+[node name="CubeItem2" parent="." unique_id=181761504 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4553783, 0.24902296, -7.772895)
+
+[node name="CubeItem3" parent="." unique_id=822962032 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.990595, 0.24902296, -4.849103)
+
+[node name="CubeItem4" parent="." unique_id=227553004 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7823632, 0.24902296, -1.0969048)
+
+[node name="CubeItem7" parent="." unique_id=1322975515 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.98472786, 0.24902296, -1.1244345)
+GrowthReward = 5.0
+
+[node name="CubeItem5" parent="." unique_id=959468123 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.803774, 0.24902296, 2.6548362)
+
+[node name="CubeItem6" parent="." unique_id=1842276451 instance=ExtResource("3_c1ape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8449287, 0.24902296, 5.577635)
+
+[node name="Collector" parent="." unique_id=318400045 instance=ExtResource("4_5q3du")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9, 0.23468542, 0)

@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Camera : Node3D
+public partial class Camera : Camera3D
 {
     [Export] public float MouseSensitivity = 0.003f;
     [Export] public float MinPitchDegrees = -89f;

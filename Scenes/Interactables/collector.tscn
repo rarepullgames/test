@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dplnup2kv17tt"]
+
+[ext_resource type="Script" uid="uid://bjgo7kbyifebh" path="res://Scripts/Interactables/Collector.cs" id="1_801s1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_801s1"]
+albedo_color = Color(0.8057987, 0.14083639, 0.10912854, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ircqx"]
+material = SubResource("StandardMaterial3D_801s1")
+size = Vector3(4, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ircqx"]
+size = Vector3(4, 2, 1)
+
+[node name="Collector" type="Area3D" unique_id=318400045]
+script = ExtResource("1_801s1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=272158838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_ircqx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1321221769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_ircqx")

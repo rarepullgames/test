@@ -18,12 +18,40 @@ public partial class Player : CharacterBody3D
 
 	private Vector2 movementInput = Vector2.Zero;
 
+	private float targetSize = 1.0f;
+	private float originalRadius;
+
+	private CapsuleShape3D growthCheckShape;
+	private PhysicsShapeQueryParameters3D growthQuery;
+
 	public override void _Ready()
 	{
+		AddToGroup("player");
+
 		var collider = GetNode<CollisionShape3D>("CollisionShape3D");
 		var capsule = (CapsuleShape3D)collider.Shape;
 
 		originalHalfHeight = capsule.Height * 0.5f;
+		originalRadius = capsule.Radius;
+
+		currentSize = Scale.X;
+		targetSize = currentSize;
+
+		// Separate shape used only for checking available space.
+		growthCheckShape = new CapsuleShape3D();
+
+		growthQuery = new PhysicsShapeQueryParameters3D
+		{
+			Shape = growthCheckShape,
+			CollisionMask = CollisionMask,
+			CollideWithBodies = true,
+			CollideWithAreas = false,
+			Margin = 0.0f,
+			Exclude = new Godot.Collections.Array<Rid>
+		{
+			GetRid()
+		}
+		};
 	}
 
 	public override void _Process(double delta)
@@ -76,22 +104,90 @@ public partial class Player : CharacterBody3D
 
 	private void UpdateSize(double delta)
 	{
+		float step = ResizeSpeed * (float)delta;
 		float input = Input.GetAxis("Q", "E");
 
-		float newSize = Mathf.Clamp(
-			currentSize + input * ResizeSpeed * (float)delta,
+		// Keep the Q/E testing controls.
+		targetSize = Mathf.Clamp(
+			targetSize + input * step,
 			MinSize,
 			MaxSize
 		);
 
-		float sizeChange = newSize - currentSize;
+		float nextSize = Mathf.MoveToward(
+			currentSize,
+			targetSize,
+			step
+		);
 
-		Scale = Vector3.One * newSize;
+		if (Mathf.IsEqualApprox(nextSize, currentSize))
+			return;
 
-		// Your capsule is centered on the player.
-		// Move its center to keep the bottom at the same height.
-		Position += Vector3.Up * originalHalfHeight * sizeChange;
+		if (nextSize > currentSize && !CanFitSize(nextSize))
+		{
+			// Find a smaller growth step that still fits.
+			float safeSize = currentSize;
+			float blockedSize = nextSize;
 
-		currentSize = newSize;
+			for (int i = 0; i < 6; i++)
+			{
+				float middle = (safeSize + blockedSize) * 0.5f;
+
+				if (CanFitSize(middle))
+					safeSize = middle;
+				else
+					blockedSize = middle;
+			}
+
+			nextSize = safeSize;
+		}
+
+		if (Mathf.IsEqualApprox(nextSize, currentSize))
+			return;
+
+		float sizeChange = nextSize - currentSize;
+
+		Scale = Vector3.One * nextSize;
+
+		// Preserve the height of the capsule's bottom.
+		GlobalPosition += Vector3.Up * originalHalfHeight * sizeChange;
+
+		currentSize = nextSize;
+	}
+
+	public void AddGrowth(float amount)
+	{
+		targetSize = Mathf.Clamp(
+			targetSize + Mathf.Max(amount, 0.0f),
+			MinSize,
+			MaxSize
+		);
+	}
+
+	private bool CanFitSize(float size)
+	{
+		float radius = originalRadius * size;
+		float height = originalHalfHeight * 2.0f * size;
+
+		// Tiny tolerance so normal floor contact doesn't block growth.
+		float skin = Mathf.Min(0.001f, radius * 0.01f);
+
+		growthCheckShape.Radius = radius - skin;
+		growthCheckShape.Height = height - skin * 2.0f;
+
+		Vector3 candidatePosition = GlobalPosition
+			+ Vector3.Up * originalHalfHeight * (size - currentSize);
+
+		growthQuery.Transform = new Transform3D(
+			GlobalBasis.Orthonormalized(),
+			candidatePosition
+		);
+
+		growthQuery.CollisionMask = CollisionMask;
+
+		var space = GetWorld3D().DirectSpaceState;
+
+		// One overlap is enough to reject this size.
+		return space.IntersectShape(growthQuery, 1).Count == 0;
 	}
 }

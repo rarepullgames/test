@@ -2,12 +2,9 @@
 
 [ext_resource type="Script" uid="uid://4aks0mwe7i4n" path="res://Scripts/Player.cs" id="1_bk5kl"]
 [ext_resource type="Script" uid="uid://btb02bmty1se6" path="res://Scripts/Camera.cs" id="2_ojo44"]
+[ext_resource type="Script" uid="uid://bojw6on4rd0sh" path="res://Scripts/Player/PickupSystem.cs" id="3_801yk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ircqx"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ircqx"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ircqx"]
 
 [node name="Player" type="CharacterBody3D" unique_id=2032429725]
 floor_constant_speed = true
@@ -22,11 +19,7 @@ shape = SubResource("CapsuleShape3D_ircqx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("2_ojo44")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1561293178]
-visible = false
-mesh = SubResource("CapsuleMesh_ircqx")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1564641407]
-transform = Transform3D(0.7064703, 0, 0, 0, 0.41640514, 0, 0, 0, 0.55392355, 0, 0.48666131, -0.38844603)
-visible = false
-mesh = SubResource("BoxMesh_ircqx")
+[node name="PickupSystem" type="Node" parent="." unique_id=1611540081]
+script = ExtResource("3_801yk")
+PickupReach = 2.5
+HoldStrength = 200.0
